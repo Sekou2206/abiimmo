@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abi IMMO - Votre Expert Immobilier</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #1a1a1a;
+            --secondary-dark: #2c2c2c;
+            --tertiary-dark: #3d3d3d;
+            --light-gray: #e8e8e8;
+            --medium-gray: #b8b8b8;
+            --background: #f5f5f5;
+            --white: #ffffff;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --shadow-heavy: rgba(0, 0, 0, 0.25);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #d4c5b9 0%, #e8e8e8 50%, #c4b5a9 100%);
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation avec animations avancées */
+        nav {
+            background: linear-gradient(180deg, var(--primary-dark) 0%, var(--secondary-dark) 100%);
+            padding: 1.2rem 2rem;
+            box-shadow: 0 4px 20px var(--shadow-heavy);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 0.8rem 2rem;
+            box-shadow: 0 6px 30px var(--shadow-heavy);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--white);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--light-gray), transparent);
+            transition: width 0.4s ease;
+        }
+
+        .logo:hover::after {
+            width: 100%;
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+            text-shadow: 0 4px 8px var(--shadow-medium);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            list-style: none;
+        }
+
+        .nav-links li {
+            position: relative;
+        }
+
+        .nav-links a {
+            position: relative;
+            color: var(--medium-gray);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.8rem 1.5rem;
+            display: block;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            border-radius: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s ease, height 0.5s ease;
+            pointer-events: none;
+        }
+
+        .nav-links a:hover::before {
+            width: 60px;
+            height: 60px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--light-gray), transparent);
+            transform: translateX(-50%);
+            transition: width 0.4s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 80%;
+        }
+
+        .nav-links a:hover {
+            color: var(--white);
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-links a.active {
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Section avec parallax */
+        .hero {
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
+
+        .hero-content {
+            background: transparent;
+            border-radius: 0;
+            overflow: visible;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .hero-image {
+    width: 100%;
+    height: 600px;
+    background: linear-gradient(135deg, rgba(44, 44, 44, 0.3) 0%, rgba(61, 61, 61, 0.3) 100%), 
+                url('chemin/vers/votre/photo-agence.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 15px 50px var(--shadow-heavy);
+}
+        
+
+        .hero-text {
+            padding: 4rem 3rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(212, 197, 185, 0.7), rgba(232, 232, 232, 0.7));
+            backdrop-filter: blur(10px);
+            margin: 3rem auto;
+            max-width: 1200px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px var(--shadow-medium);
+        }
+
+        .hero-text h1 {
+            font-size: 3rem;
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-text h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--secondary-dark), transparent);
+            border-radius: 2px;
+        }
+
+        .hero-text p {
+            font-size: 1.3rem;
+            color: var(--tertiary-dark);
+            max-width: 800px;
+            margin: 2rem auto 0;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        /* Section Présentation avec animations */
+        .presentation-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
+        }
+
+        .presentation-container {
+            background: linear-gradient(135deg, rgba(228, 220, 210, 0.8), rgba(232, 232, 232, 0.8));
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 4rem;
+            box-shadow: 0 10px 40px var(--shadow-medium);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .presentation-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(232, 232, 232, 0.3), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .presentation-container:hover::before {
+            left: 100%;
+        }
+
+        .presentation-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px var(--shadow-heavy);
+        }
+
+        .presentation-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 3rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .presentation-title::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 4px;
+            background: var(--secondary-dark);
+            border-radius: 2px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--tertiary-dark);
+            font-weight: 400;
+            margin-top: 0.5rem;
+            margin-bottom: 3rem;
+            letter-spacing: 0.5px;
+        }
+
+        .presentation-content {
+            display: flex;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .presentation-image {
+            flex: 0 0 320px;
+            height: 380px;
+            background: linear-gradient(135deg, #d0d0d0, #e0e0e0);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--tertiary-dark);
+            font-size: 1rem;
+            text-align: center;
+            padding: 2rem;
+            box-shadow: 0 8px 25px var(--shadow-medium);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .presentation-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(44, 44, 44, 0.05) 100%);
+            transition: opacity 0.4s ease;
+        }
+
+        .presentation-image:hover {
+            transform: scale(1.05) rotateY(5deg);
+            box-shadow: 0 15px 40px var(--shadow-heavy);
+        }
+
+        .presentation-image:hover::before {
+            opacity: 0;
+        }
+
+        .presentation-text {
+            flex: 1;
+            animation: fadeInRight 0.8s ease;
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .presentation-text h3 {
+            color: var(--secondary-dark);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .presentation-text h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 5px;
+            height: 70%;
+            background: linear-gradient(180deg, var(--primary-dark), var(--tertiary-dark));
+            border-radius: 3px;
+        }
+
+        .presentation-text p {
+            color: var(--tertiary-dark);
+            font-size: 1.15rem;
+            line-height: 1.9;
+            margin-bottom: 1.3rem;
+            font-weight: 300;
+            opacity: 0;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .presentation-text p:nth-child(2) { animation-delay: 0.1s; }
+        .presentation-text p:nth-child(3) { animation-delay: 0.2s; }
+        .presentation-text p:nth-child(4) { animation-delay: 0.3s; }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Footer moderne */
+        footer {
+            background: linear-gradient(180deg, var(--primary-dark) 0%, #0a0a0a 100%);
+            color: var(--light-gray);
+            padding: 4rem 2rem 1rem;
+            margin-top: 6rem;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--tertiary-dark), transparent);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .footer-section:nth-child(1) { animation-delay: 0.1s; }
+        .footer-section:nth-child(2) { animation-delay: 0.2s; }
+        .footer-section:nth-child(3) { animation-delay: 0.3s; }
+        .footer-section:nth-child(4) { animation-delay: 0.4s; }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            color: var(--white);
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--light-gray), transparent);
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: var(--medium-gray);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8rem;
+            transition: all 0.3s ease;
+            padding-left: 0;
+        }
+
+        .footer-section a {
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .footer-section a::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--white);
+            transform: translateX(5px);
+            padding-left: 25px;
+        }
+
+        .footer-section a:hover::before {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--tertiary-dark);
+            color: var(--medium-gray);
+            font-size: 0.95rem;
+        }
+
+        /* Bouton de scroll to top */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--secondary-dark), var(--primary-dark));
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 20px var(--shadow-heavy);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--shadow-heavy);
+        }
+
+        .scroll-top.visible {
+            display: flex;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 0.3rem;
+            }
+
+            .nav-links a {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .hero-text p {
+                font-size: 1.1rem;
+            }
+
+            .presentation-content {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .presentation-image {
+                flex: 0 0 280px;
+                height: 280px;
+            }
+
+            .presentation-container {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .presentation-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">ABI IMMO</div>
+            <ul class="nav-links">
+                <li><a href="#accueil" class="active nav-link">Accueil</a></li>
+                <li><a href="Biens.html" class="nav-link">Biens</a></li>
+                <li><a href="Estimation.html" class="nav-link">Valeur de bien</a></li>
+                <li><a href="Partenaire.html" class="nav-link">Nos associés</a></li>
+                <li><a href="contact.html" class="nav-link">Contactez nous</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero" id="accueil">
+        <div class="hero-content">
+            <div class="hero-image" style="background-image: url(AgenceImmo.png);">
+            </div>
+            <div class="hero-text">
+                <h1>Bienvenue chez Abi IMMO</h1>
+                <p>Votre partenaire de confiance pour tous vos projets immobiliers. Expertise, professionnalisme et accompagnement personnalisé dans chaque étape de votre parcours.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="presentation-section">
+        <div class="presentation-container">
+            <h2 class="presentation-title">Direction Générale</h2>
+            <p class="subtitle">ABI IMMO - Leadership & Excellence</p>
+            <div class="presentation-content">
+               <div class="presentation-image">
+                    <img src="Directeur general.png" style="width: 100%; height: auto; border-radius: 15px;" alt="Sekou Camara - Directeur Général">
+                  </div>
+                <div class="presentation-text">
+                    <h3>Sekou Camara - Directeur Général</h3>
+                    <p>En tant que Directeur Général d'ABI IMMO, je dirige une équipe d'experts dévoués à l'excellence dans le secteur immobilier. Notre mission est de transformer vos ambitions en réalité concrète.</p>
+                    <p>Avec une vision stratégique axée sur l'innovation et la satisfaction client, nous avons développé une approche unique qui combine expertise du marché local et standards internationaux de qualité.</p>
+                    <p>Notre engagement : fournir des solutions immobilières sur mesure, accompagnées d'un service irréprochable et d'une transparence totale à chaque étape de votre projet.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <button class="scroll-top" id="scrollTop">↑</button>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Abi IMMO</h3>
+                <p>Votre expert immobilier de confiance</p>
+                <p>Excellence et professionnalisme</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>📞 +225 15 55 93 88</p>
+                <p>✉️ contact@abiimmo.ci</p>
+                <p>📍 Abidjan, Côte d'Ivoire</p>
+            </div>
+            <div class="footer-section">
+                <h3>Services</h3>
+                <a href="Biens.html">Vente & Location</a>
+                <a href="Estimation.html">Estimation de biens</a>
+                <a href="Partenaire.html">Nos partenaires</a>
+            </div>
+            <div class="footer-section">
+                <h3>Horaires</h3>
+                <p>Lundi - Vendredi: 8h - 18h</p>
+                <p>Samedi: 9h - 14h</p>
+                <p>Dimanche: Fermé</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Abi IMMO. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation active state
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll to top button
+        const scrollTopBtn = document.getElementById('scrollTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Parallax effect on hero image
+        window.addEventListener('scroll', () => {
+            const heroImage = document.querySelector('.hero-image');
+            if (heroImage) {
+                const scrollPosition = window.scrollY;
+                heroImage.style.transform = `translateY(${scrollPosition * 0.3}px)`;
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.hero, .presentation-section').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
